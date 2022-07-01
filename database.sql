@@ -7,6 +7,6 @@ CREATE TABLE things_to_do (
 
 INSERT INTO "things_to_do" 
 	("task", "due", "completion") 
-VALUES
+VALUES ('Weekend Challenge', '2022-07-02');
 
 SELECT * FROM weekend_to_do_app;
