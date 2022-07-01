@@ -13,8 +13,8 @@ app.use(express.static('server/public'));
 
 // Setup the songs router
 // to respond to requests from the `/songs` URL
-let toDoRouter = require('./routes/to-do.router');
-app.use('/tasks', toDoRouter);
+let router = require('./routes/to-do.router');
+app.use('/tasks', router);
 
 
 // Start express

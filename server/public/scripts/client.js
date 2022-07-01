@@ -18,29 +18,32 @@ function getTasks() {
         url: '/tasks'
     }).then(function (response) {
         console.log('Response from GET /tasks', response);
-
-        //append data to the DOM
-        for (let i=0; i<response.length; i++) {
-            $('#taskList').append(`
-                <tr>
-                    <td>${response[i].task}</td>
-                    <td>${response[i].due}</td>
-                    <td>${response[i].completion}</td>
-                    <td>
-                    <button>🗑</button>
-                    </td>
-                </tr>
-            `);
-        }
-    });
+        renderTasks(response);
+    }).catch((error) => {
+        console.log('Error in GET /tasks', error);
+    })
 }
 
+function renderTasks(response) {
+console.log('in renderTasks', response);
+
+//append data to the DOM
+    for (let i=0; i<response.length; i ++) {
+        $('#taskList').append(`
+        <tr>
+            <td>${response[i].task}</td>
+            <td>${response[i].due}</td>
+            <td>${response[i].completion}</td>
+        </tr>
+        `)
+    }
+}
 // Front end experience that allows a user to create a task
 // Add task
 function addTask() {
     let newData = {
         task: $('#task').val(),
-        due: $('#date').val()
+        due: $('#due').val()
     }
 
     $.ajax({
@@ -52,6 +55,7 @@ function addTask() {
         $('#taskList').append(`
             <td>${response.task}</td>
             <td>${response.due}</td>
+            <td
         `)
     }).catch(function (error) {
         console.log('Error in POST /tasks', error)

@@ -8,7 +8,10 @@ router.get('/', (req, res) => {
     let queryText = 'SELECT * FROM "things_to_do" ORDER BY "due";';
     pool.query(queryText)
         .then((result) => {
+            console.log('This is what we get from the server', result);
+            // sends back the results in an object
             res.send(result.rows);
+            console.log("This is what I'm sending", result.rows);
         })
         .catch((error) => {
             console.log('Error in GET query,', error);
