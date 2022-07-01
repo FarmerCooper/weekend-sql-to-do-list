@@ -26,6 +26,9 @@ function getTasks() {
                     <td>${response[i].task}</td>
                     <td>${response[i].due}</td>
                     <td>${response[i].completion}</td>
+                    <td>
+                    <button>🗑</button>
+                    </td>
                 </tr>
             `);
         }
