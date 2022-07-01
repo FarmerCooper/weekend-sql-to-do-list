@@ -51,12 +51,9 @@ function addTask() {
         url: '/tasks',
         data: newData
     }).then(function (response) {
+        console.log('in Post, this is the response:',response)
         // Append to the DOM
-        $('#taskList').append(`
-            <td>${response.task}</td>
-            <td>${response.due}</td>
-            <td
-        `)
+        getTasks();
     }).catch(function (error) {
         console.log('Error in POST /tasks', error)
     })
