@@ -5,6 +5,7 @@ function onReady() {
 
     // On page load, get tasks
     getTasks();
+    $('.add-btn').on('click', addTask);
 }
 
 // Get tasks
@@ -31,7 +32,28 @@ function getTasks() {
     });
 }
 
-// Create a front end experience that allows a user to create a Task.
+// Front end experience that allows a user to create a task
+// Add task
+function addTask() {
+    let newData = {
+        task: $('#task').val(),
+        due: $('#date').val()
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: '/tasks',
+        data: newData
+    }).then(function (response) {
+        // Append to the DOM
+        $('#taskList').append(`
+            <td>${response.task}</td>
+            <td>${response.due}</td>
+        `)
+    }).catch(function (error) {
+        console.log('Error in POST /tasks', error)
+    })
+}
 
 // Whenever a Task is created the front end should refresh to show all tasks that need to be completed.
 

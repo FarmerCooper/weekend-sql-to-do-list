@@ -16,4 +16,20 @@ router.get('/', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    const newTask = req.body;
+    const queryText = `
+        INSERT INTO "things_to_do" ("task", "due")
+        VALUES ($1, $2);
+    `;
+    pool.query(queryText, [newTask.task, newTask.due])
+        .then((result) => {
+            res.sendStatus(201);
+        })
+        .catch((error) => {
+            console.log('Error in POSTing - error =>', error)
+            res.sendStatus(500);
+        })
+})
+
 module.exports = router;
