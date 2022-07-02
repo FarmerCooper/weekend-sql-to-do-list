@@ -35,4 +35,23 @@ router.post('/', (req, res) => {
         })
 })
 
+
+
+router.delete('/:id', (req, res) => {
+    let reqId = req.params.id;
+    // console.log('This is the req.params.id:', req.params.id);
+
+    let queryText = 'DELETE FROM "things_to_do" WHERE id = $1;';
+    pool.query(queryText, [reqId])
+        .then(() => {
+            console.log('Task has been deleted');
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('Error in delete:', error);
+            res.sendStatus(500);
+        })
+})
+
+
 module.exports = router;

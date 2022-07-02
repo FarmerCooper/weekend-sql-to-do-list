@@ -5,7 +5,10 @@ function onReady() {
 
     // On page load, get tasks
     getTasks();
+
+    // Click listeners
     $('.add-btn').on('click', addTask);
+    $('#taskList').on('click', '.remove', removeTask);
 }
 
 // Get tasks
@@ -34,7 +37,7 @@ console.log('in renderTasks', response);
             <td>${response[i].task}</td>
             <td>${response[i].due}</td>
             <td>${response[i].completion}</td>
-            <td>
+            <td data-id = ${response[i].id} class = "remove">
                 🗑
             </td>
         </tr>
@@ -64,5 +67,23 @@ function addTask() {
     })
 }
 
+// Update the status of task completion
+
+
+// Delete task
+function removeTask() {
+    let taskId = $(this).data('id');
+
+    $.ajax({
+        method: 'DELETE',
+        url: `/tasks/${taskId}`,
+        data: {id: taskId}
+    }).then(function() {
+        // Once deleted, refresh the updated tasks
+        getTasks();
+    }).catch(function(error) {
+        console.log('Check in DELETE /tasks', error);
+    })
+}
 
 // Each Task should have an option to 'Complete' or 'Delete'.
