@@ -34,10 +34,14 @@ console.log('in renderTasks', response);
             <td>${response[i].task}</td>
             <td>${response[i].due}</td>
             <td>${response[i].completion}</td>
+            <td>
+                🗑
+            </td>
         </tr>
         `)
     }
 }
+
 // Front end experience that allows a user to create a task
 // Add task
 function addTask() {
@@ -53,12 +57,12 @@ function addTask() {
     }).then(function (response) {
         console.log('in Post, this is the response:',response)
         // Append to the DOM
+        // Task is created the front end should refresh to show all tasks that need to be completed.
         getTasks();
     }).catch(function (error) {
         console.log('Error in POST /tasks', error)
     })
 }
 
-// Whenever a Task is created the front end should refresh to show all tasks that need to be completed.
 
 // Each Task should have an option to 'Complete' or 'Delete'.
