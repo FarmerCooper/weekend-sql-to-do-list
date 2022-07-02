@@ -36,7 +36,12 @@ console.log('in renderTasks', response);
         <tr>
             <td>${response[i].task}</td>
             <td>${response[i].due}</td>
-            <td>${response[i].completion}</td>
+            <td>
+                <label for = "done.">
+                    <input type="checkbox" id="accept" value="yes">done.
+                </label>
+            </td>
+            <td></td>
             <td data-id = ${response[i].id} class = "remove">
                 🗑
             </td>
