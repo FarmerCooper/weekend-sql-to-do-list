@@ -9,6 +9,7 @@ function onReady() {
     // Click listeners
     $('.add-btn').on('click', addTask);
     $('#taskList').on('click', '.remove', removeTask);
+    $('#taskList').on('click', '#checked', updateTask)
 }
 
 // Get tasks
@@ -38,7 +39,8 @@ console.log('in renderTasks', response);
             <td>${response[i].due}</td>
             <td>
                 <label for = "done.">
-                    <input type="checkbox" id="accept" value="yes">done.
+                    <input type="checkbox" id="checked" 
+                    data-complete = "${response[i].completion}" value="yes">done.
                 </label>
             </td>
             <td></td>
@@ -73,7 +75,21 @@ function addTask() {
 }
 
 // Update the status of task completion
+function updateTask() {
+    let taskId = $(this).data('id');
+    let checked = $(this).data('complete')
+    console.log('data of checked:', checked);
 
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${taskId}`,
+        data: {completion: !checked, id: taskId}
+    }).then(function() {
+        // getTasks();
+    }).catch(function(error) {
+        alert('Error in UPDATing', error);
+    })
+}
 
 // Delete task
 function removeTask() {

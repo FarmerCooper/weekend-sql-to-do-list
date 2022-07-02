@@ -8,10 +8,10 @@ router.get('/', (req, res) => {
     let queryText = 'SELECT * FROM "things_to_do" ORDER BY "due";';
     pool.query(queryText)
         .then((result) => {
-            console.log('This is what we get from the server', result);
+            // console.log('This is what we get from the server', result);
             // sends back the results in an object
             res.send(result.rows);
-            console.log("This is what I'm sending", result.rows);
+            // console.log("This is what I'm sending", result.rows);
         })
         .catch((error) => {
             console.log('Error in GET query,', error);
@@ -35,7 +35,18 @@ router.post('/', (req, res) => {
         })
 })
 
+router.put('/:id', (req, res) => {
+    console.log('/tasks PUT we get this:', req.params.taskId, req.body.completion);
 
+    const queryText = 'UPDATE "things_to_do" SET completion = $1 WHERE id = $2'
+    pool.query(queryText, [req.body.completion, req.params.taskId])
+        .then((dbResponse) => {
+            res.send(dbResponse.rows);
+        })
+        .catch((error) => {
+            console.log(`Error in router UPDATing /PUT ${error}`);
+        })
+})
 
 router.delete('/:id', (req, res) => {
     let reqId = req.params.id;
