@@ -12,6 +12,7 @@ function onReady() {
     $('#taskList').on('click', '.completed', updateTask)
 }
 
+
 // Get tasks
 function getTasks() {
     // empty the table
@@ -23,6 +24,11 @@ function getTasks() {
     }).then(function (response) {
         console.log('Response from GET /tasks', response);
         renderTasks(response);
+        // for (let i=0; i < response.length; i++) {
+        //     if(response[i].completion !== false ) {
+        //         $(`#row`).addClass('lime-green');
+        //     }
+        // }
     }).catch((error) => {
         console.log('Error in GET /tasks', error);
     })
@@ -34,18 +40,20 @@ console.log('in renderTasks', response);
 //append data to the DOM
     for (let i=0; i<response.length; i ++) {
         $('#taskList').append(`
-        <tr>
+        <tr id = "row" class = "status" data-completion = "${response[i].completion}">
             <td>${response[i].task}</td>
             <td>${response[i].due}</td>
-            <td data-complete = ${response[i].completion} class = "completed">
-                ☑️
+            <td data-id = ${response[i].id} data-complete = ${response[i].completion} class = "completed column-icon">
+                ☑️ ${response[i].completion}
             </td>
-            <td data-id = ${response[i].id} class = "remove">
+            <td data-id = ${response[i].id} class = "remove column-icon">
                 🗑
             </td>
         </tr>
         `)
+
     }
+
 }
 
 // Front end experience that allows a user to create a task
@@ -72,16 +80,17 @@ function addTask() {
 
 // Update the status of task completion
 function updateTask() {
-    let taskId = $(this).data('id');
+    let id = $(this).data('id');
     let checked = $(this).data('complete')
     console.log('data of checked:', checked);
 
     $.ajax({
         method: 'PUT',
-        url: `/tasks/${taskId}`,
-        data: {completion: !checked, id: taskId}
+        url: `/tasks/${id}`,
+        data: {completion: !checked}
     }).then(function() {
         getTasks();
+        // changeCSS(id);
     }).catch(function(error) {
         alert('Error in UPDATing', error);
     })

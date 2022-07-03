@@ -36,10 +36,12 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    console.log('/tasks PUT we get this:', req.params.taskId, req.body.completion);
+let taskId = req.params.id;
+let completeStatus = req.body.completion;
+let queryText;
 
-    const queryText = 'UPDATE "things_to_do" SET completion = $1 WHERE id = $2'
-    pool.query(queryText, [req.body.completion, req.params.taskId])
+    queryText = 'UPDATE "things_to_do" SET completion = $1 WHERE id = $2'
+    pool.query(queryText, [completeStatus, taskId])
         .then((dbResponse) => {
             res.send(dbResponse.rows);
         })
