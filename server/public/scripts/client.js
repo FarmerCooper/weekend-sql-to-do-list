@@ -43,10 +43,10 @@ console.log('in renderTasks', response);
         <tr id = "row" class = "status" data-completion = "${response[i].completion}">
             <td>${response[i].task}</td>
             <td>${response[i].due}</td>
-            <td data-id = ${response[i].id} data-complete = ${response[i].completion} class = "completed column-icon">
-                ☑️ ${response[i].completion}
+            <td data-id = ${response[i].id} data-complete = ${response[i].completion} class = "completed column-icon pointer">
+                Click to mark complete
             </td>
-            <td data-id = ${response[i].id} class = "remove column-icon">
+            <td data-id = ${response[i].id} class = "remove column-icon pointer">
                 🗑
             </td>
         </tr>
